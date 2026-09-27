@@ -32,5 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 
-## VS CODE ##
+## OTHERS ##
 *.properties
+*.yml
