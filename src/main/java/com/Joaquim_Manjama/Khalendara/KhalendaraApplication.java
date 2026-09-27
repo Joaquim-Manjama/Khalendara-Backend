@@ -17,5 +17,4 @@ public class KhalendaraApplication {
     public String HelloWorld() {
         return "Hello World";
     }
-
 }
