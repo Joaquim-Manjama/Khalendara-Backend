@@ -3,10 +3,10 @@ package com.Joaquim_Manjama.Khalendara.Service;
 import com.Joaquim_Manjama.Khalendara.DTO.LoginDTO;
 import com.Joaquim_Manjama.Khalendara.DTO.RegisterDTO;
 import com.Joaquim_Manjama.Khalendara.DTO.UserDTO;
+import com.Joaquim_Manjama.Khalendara.Exception.AuthException;
 import com.Joaquim_Manjama.Khalendara.Model.User;
 import com.Joaquim_Manjama.Khalendara.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class AuthenticationService {
 
         Optional<User> possibleUser = userRepository.findByEmail(registerDTO.email());
 
-        if  (possibleUser.isPresent()) return null;
+        if  (possibleUser.isPresent()) throw AuthException.UserAlreadyExists();
 
         User user = new User();
         user.setFirstName(registerDTO.firstName());
@@ -45,9 +45,11 @@ public class AuthenticationService {
             if (passwordEncoder.matches(loginDTO.password(), user.getPassword())) {
                 return convertToDTO(user);
             }
+
+            throw AuthException.IncorrectPassword();
         }
 
-        return null;
+        throw AuthException.UserNotFound();
     }
 
     public UserDTO convertToDTO(User user) {

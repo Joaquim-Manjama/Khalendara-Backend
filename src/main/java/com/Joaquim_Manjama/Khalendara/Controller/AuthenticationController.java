@@ -18,12 +18,12 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<UserDTO> register(@RequestBody RegisterDTO registerDTO) {
         UserDTO user = authService.register(registerDTO);
-        return user != null ? ResponseEntity.ok(user) : null;
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("/login")
     public ResponseEntity<UserDTO> login(@RequestBody LoginDTO loginDTO) {
         UserDTO user = authService.login(loginDTO);
-        return user != null ? ResponseEntity.ok(user) : null;
+        return ResponseEntity.ok(user);
     }
 }
